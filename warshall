@@ -1,0 +1,46 @@
+#include<stdio.h>
+void main()
+{
+int n,i,j,k, val, w[10][10],R[10][10][10];
+printf("Enter the number of nodes in the graph : ");
+scanf("%d",&n);
+printf("Read Cost/Weight matrix");
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+scanf("%d",&w[i][j]);
+// Initialise R[0] with w[i,j]
+for(i=1;i<=n;i++)
+for(j=1;j<=n;j++)
+R[0][i][j]=w[i][j];
+// Generate Boolean transitive closure matrices R(1),R(2),....R(n)
+for(k=1;k<=n;k++)
+{
+for(i=1;i<=n;i++)
+{
+for(j=1;j<=n;j++)
+{
+if (R[k-1][i][j] == 1 )
+val = R[k-1][i][j];
+else
+val = R[k-1][i][j] || (R[k-1][i][k] && R[k-1][k][j]);
+R[k][i][j]= val;
+}
+}
+}
+printf("\n Warshall's Demo : Series of Transitive Closure matrices \n");
+printf("-----------------------------------------------------\n");
+for(k=0;k<=n;k++)
+{
+printf("Boolean Transitive Closure Matrix : R[%d]", k);
+printf("\n-----------------------------------------------------\n");
+for( i=1;i<=n;i++)
+{
+for(j=1;j<=n;j++)
+{
+printf("%d \t", R[k][i][j]);
+}
+printf("\n");
+}
+printf("-----------------------------------------------------\n");
+}
+}
